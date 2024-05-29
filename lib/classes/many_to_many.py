@@ -1,11 +1,11 @@
 class Article:
     all = []
+
     def __init__(self, author, magazine, title):
         self.author = author
         self.magazine = magazine
         self.title = title
-
-    # type(self).all.append(self)
+        type(self).all.append(self)
 
     @property
     def title(self):
@@ -45,16 +45,16 @@ class Article:
             self._magazine = magazine
         else:
             return None
-            # raise Exception("Magazine must be of type Magazine")  
+            # raise Exception("Magazine must be of type Magazine")
 
-        
+
 class Author:
     def __init__(self, name):
         self.name = name
 
-        @property
-        def name(self):
-         return self._name
+    @property
+    def name(self):
+        return self._name
 
     @name.setter
     def name(self, name):
@@ -65,15 +65,13 @@ class Author:
             # raise Exception("Name must be a non-empty string and it cannot be changed")
 
     def articles(self):
-         return [article for article in Article.all if article.magazine is self]
+        return [article for article in Article.all if article.author is self]
 
     def magazines(self):
-        return list({article.author for article in self.articles()})
-
+        return list({article.magazine for article in self.articles()})
 
     def add_article(self, magazine, title):
-       return list({article.author for article in self.articles()})
-
+        return Article(self, magazine, title)
 
     def topic_areas(self):
         return (
@@ -85,6 +83,7 @@ class Author:
 
 class Magazine:
     all = []
+
     def __init__(self, name, category):
         self.name = name
         self.category = category
@@ -114,20 +113,16 @@ class Magazine:
             return None
             # raise Exception("Category must be a non-empty string")
 
-
     def articles(self):
         return [article for article in Article.all if article.magazine is self]
 
-
     def contributors(self):
         return list({article.author for article in self.articles()})
-
 
     def article_titles(self):
         return (
             [article.title for article in self.articles()] if self.articles() else None
         )
-
 
     def contributing_authors(self):
         non_unique_authors = [article.author for article in self.articles()]
@@ -149,4 +144,3 @@ class Magazine:
             if Article.all
             else None
         )
-        pass
